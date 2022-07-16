@@ -17,12 +17,12 @@ def main():
     'es': SpanishScrapper
   }
 
-  all_words = []
+  all_words = {}
   for language in scrappers.keys():
     scrapper = scrappers[language]()
     words = scrapper.get_words()
 
-    all_words = all_words + words
+    all_words[language] = words
 
   # Now save the json file
   logger.info('Done')
