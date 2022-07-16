@@ -65,7 +65,6 @@ jobs:
           body: "${{ steps.current-time.outputs.time }}"
           files: |
             ./info.json
-            ./words.en.json
-            ./words.es.json
+            ./words.json
         env:
           GITHUB_REPOSITORY: kevinrpb/additives-scrapper
