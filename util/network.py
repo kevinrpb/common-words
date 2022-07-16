@@ -11,7 +11,7 @@ __session = requests.Session()
 __session.cookies.update({
   'eu_cookie_consent': '%7B%22a%22%3A%7B%22europa%22%3A%5B%22europa-analytics%22%2C%22load-balancers%22%2C%22authentication%22%5D%7D%2C%22r%22%3A%7B%7D%7D'
 })
-def get_page(url: str) -> BeautifulSoup:
+def get_page_source(url: str) -> str:
   logger = setup_logger(__name__)
 
   # Setup cookies first
@@ -24,7 +24,10 @@ def get_page(url: str) -> BeautifulSoup:
   page = __session.get(url)
   html = cleanup_text(page.text)
 
-  # And parse it
+  return html
+
+def get_page_soup(url: str) -> BeautifulSoup:
+  html = get_page_source(url)
   soup = BeautifulSoup(html, 'lxml')
 
   return soup
