@@ -1,3 +1,8 @@
-# `additives-scrapper`
+# `common-words`
 
-Scrap [https://webgate.ec.europa.eu/foods_system/main](https://webgate.ec.europa.eu/foods_system/main) to fetch food additives information.
+Scrap some web pages to get lists of common words in different languages. Currently grabs:
+
+| Language | Nouns | Adjectives | Verbs |
+|----------|:-----:|:----------:|:-----:|
+| English  |   ✅   |            |       |
+| Spanish  |       |            |       |
