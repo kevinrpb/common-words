@@ -1,30 +1,28 @@
-from util import get_page_soup
+from util import get_page_soup, get_page_source
 
 
 class EnglishScrapper:
-  nouns_1000_url = 'https://www.wordexample.com/list/most-common-nouns-english'
+  nouns_url = 'https://www.wordexample.com/list/most-common-nouns-english'
+  adjectives_url = 'https://www.wordexample.com/list/most-common-adjectives-english'
+  verbs_url = 'https://www.wordexample.com/list/most-common-verbs-english/'
 
   def get_nouns(self):
-    def parse_table_row(row):
-      span = row.find('span', { 'class': 'word-popover' })
-      noun = span.get_text().strip()
-      return noun
-
-    soup = get_page_soup(self.nouns_1000_url)
-    table_div = soup.find(id='wordexample-word-list')
-    table = table_div.find('table', { 'class': 'table' })
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-
-    nouns = list(map(parse_table_row, table_rows))
+    soup = get_page_soup(self.nouns_url)
+    nouns = self._parse_wordexample(soup)
 
     return nouns
 
   def get_adjectives(self):
-    return []
+    soup = get_page_soup(self.adjectives_url)
+    adjectives = self._parse_wordexample(soup)
+
+    return adjectives
 
   def get_verbs(self):
-    return []
+    soup = get_page_soup(self.verbs_url)
+    verbs = self._parse_wordexample(soup)
+
+    return verbs
 
   def get_places(self):
     return []
@@ -46,3 +44,18 @@ class EnglishScrapper:
       'places': places,
       'people': people
     }
+
+  def _parse_wordexample(self, soup):
+    def parse_table_row(row):
+      span = row.find('span', { 'class': 'word-popover' })
+      word = span.get_text().strip()
+      return word
+
+    table_div = soup.find(id='wordexample-word-list')
+    table = table_div.find('table', { 'class': 'table' })
+    table_body = table.find('tbody')
+    table_rows = table_body.find_all('tr')
+
+    words = list(map(parse_table_row, table_rows))
+
+    return words
